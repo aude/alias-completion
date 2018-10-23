@@ -1,7 +1,7 @@
 bash-alias-completion
 =====================
 
-If you make an alias in Bash, it's not trivial to get Bash completion for it.
+If you make an alias in Bash, it's not trivial to get tab completion for it.
 This project aims to make that easy.
 
 Examples
@@ -48,15 +48,15 @@ For example:
 Motivation
 ----------
 
-Getting Bash completion for an alias is not trivial. That is because Bash does
-not have a system for automatically doing Bash completion for aliases; it
-considers the alias an entirely separate command.
+Getting tab completion for a Bash alias is not trivial. That is because Bash
+does not have a system for automatically doing tab completion for aliases;
+Bash considers the alias an entirely separate command.
 
-As such, the usual approach is that you have to add the Bash completion for
-your alias yourself.
+As such, the usual approach is that you have to add the tab completion for
+your Bash alias yourself.
 
-This project automates the step of finding the Bash completion for the upstream
-command, and then repurposing it for use with your alias.
+This project automates the step of finding the tab completion specification
+for the upstream command, and then repurposing it for use with your alias.
 
 Resources
 ---------
