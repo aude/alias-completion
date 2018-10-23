@@ -1,0 +1,112 @@
+#!/bin/bash
+
+usage() {
+    cat << _EOF_
+usage: source $(basename "${BASH_SOURCE[0]}") <alias> <command>
+
+outputs Bash completion code for alias of command.
+
+for example:
+
+    $ source bash-alias-completion k kubectl
+
+to load the generated completion:
+
+    $ eval "\$(source bash-alias-completion k kubectl)"
+
+you could use it in ~/.bashrc, or use it in completion files.
+_EOF_
+}
+
+get_completion() {
+    # use the completion of the following command
+    cmd_upstream=$1
+
+    # get the name of this command
+    cmd_current=$2
+
+    # try to get upstream completion specification
+    completion_spec=$(complete -p "$cmd_upstream" 2>/dev/null)
+
+    # if that failed, load upstream completion
+    if [ "$completion_spec" = '' ]; then
+        _completion_loader "$cmd_upstream"
+
+        # try again
+        completion_spec=$(complete -p "$cmd_upstream" 2>/dev/null)
+
+        # if failed again, bail out
+        if [ "$completion_spec" = '' ]; then
+            # (will never happen in current version of bash-completion,
+            #  because it will always give `complete -F _minimal <command>` instead of failing)
+            return 1
+        fi
+    fi
+
+    # use upstream specification for our own purpose
+    #
+    # for example, if this is upstream:
+    #
+    #     complete -o default -F _pacman pacman
+    #
+    # we want to turn that into this:
+    #
+    #     complete -o default -F _pacman pacmatic
+    #
+    completion_spec=${completion_spec/ $cmd_upstream/ $cmd_current}
+
+    # output
+    echo "$completion_spec"
+}
+
+get_output() {
+    alias=$1
+    command=$2
+
+    # build output
+    output=''
+
+    # if upstream completion is not loaded, add loading to output
+    if [ "$(complete -p "$command" 2>/dev/null)" = '' ]; then
+        output+="_completion_loader $(printf '%q' "$command");"$'\n'
+    fi
+
+    # get completion, and add to output
+    completion=$(get_completion "$command" "$alias")
+    output+="$completion;"$'\n'
+
+    # output
+    echo "$output"
+}
+
+main() {
+    # handle options
+    case "$1" in
+        -h|--help|--usage) usage; return;;
+    esac
+
+    # this program must be sourced
+    if ! [ "${BASH_SOURCE[0]}" != "$0" ]; then
+        usage 1>&2
+        return 1
+    fi
+
+    # get arguments
+    alias=$1
+    command=$2
+
+    # validate arguments
+    if ! (command -v "$alias" && command -v "$command") >/dev/null 1>&2; then
+        usage 1>&2
+        return 1
+    fi
+
+    # get output
+    output=$(get_output "$alias" "$command")
+
+    # output
+    echo "$output"
+}
+
+# run in sub-shell, to avoid altering current environment
+(main "$@")
