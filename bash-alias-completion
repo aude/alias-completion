@@ -96,7 +96,7 @@ main() {
     command=$2
 
     # validate arguments
-    if ! (command -v "$alias" && command -v "$command") >/dev/null 1>&2; then
+    if ! (command -v "$alias" && command -v "$command") >/dev/null 2>&1; then
         usage 1>&2
         return 1
     fi
