@@ -35,7 +35,7 @@ get_completion() {
     if [ "$completion_spec" = '' ]; then
         _completion_loader "$cmd_upstream"
 
-        # try again
+        # try if it works now
         completion_spec=$(complete -p "$cmd_upstream" 2>/dev/null)
 
         # if failed again, bail out
