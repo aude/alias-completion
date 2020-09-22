@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# run in sub-shell, to avoid altering environment
+(
+
 usage() {
     cat << _EOF_
 usage: source $(basename "${BASH_SOURCE[0]}") <alias> <command>
@@ -108,5 +111,6 @@ main() {
     echo "$output"
 }
 
-# run in sub-shell, to avoid altering current environment
-(main "$@")
+main "$@"
+
+)
