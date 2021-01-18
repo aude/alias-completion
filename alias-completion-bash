@@ -4,18 +4,19 @@
 (
 
 usage() {
+    cmd=$(basename "${BASH_SOURCE[0]}")
     cat << _EOF_
-usage: source $(basename "${BASH_SOURCE[0]}") <alias> <command>
+usage: source $cmd <alias> <command>
 
-outputs Bash completion code for alias of command.
+outputs bash completion code for alias of command.
 
 for example:
 
-    $ source bash-alias-completion k kubectl
+    $ source $cmd k kubectl
 
 to load the generated completion:
 
-    $ eval "\$(source bash-alias-completion k kubectl)"
+    $ eval "\$(source $cmd k kubectl)"
 
 you could use it in ~/.bashrc, or use it in completion files.
 _EOF_

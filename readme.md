@@ -1,5 +1,5 @@
-bash-alias-completion
-=====================
+alias-completion
+================
 
 If you make an alias in Bash, it's not trivial to get tab completion for it.
 This project aims to make that easy.
@@ -7,43 +7,43 @@ This project aims to make that easy.
 Examples
 --------
 
-    $ source bash-alias-complete k kubectl
-    $ eval "$(source bash-alias-complete k kubectl)"
+    $ source alias-completion-bash k kubectl
+    $ eval "$(source alias-completion-bash k kubectl)"
 
 Usage
 -----
 
-    usage: source bash-alias-completion <alias> <command>
+    usage: source alias-completion-bash <alias> <command>
     
-    outputs Bash completion code for alias of command.
+    outputs bash completion code for alias of command.
     
     for example:
     
-        $ source bash-alias-completion k kubectl
+        $ source alias-completion-bash k kubectl
     
     to load the generated completion:
     
-        $ eval "$(source bash-alias-completion k kubectl)"
+        $ eval "$(source alias-completion-bash k kubectl)"
     
     you could use it in ~/.bashrc, or use it in completion files.
 
 Installation
 ------------
 
-Put `bash-alias-completion` in a directory in your `$PATH`.
+Put `alias-completion-bash` in a directory in your `$PATH`.
 
 For example:
 
-    # install ./bash-alias-completion /usr/local/bin/
+    # install ./alias-completion-bash /usr/local/bin/
 
 Uninstallation
 --------------
 
-Remove `bash-alias-completion` from where you installed it.
+Remove `alias-completion-bash` from where you installed it.
 
 For example:
 
-    # rm /usr/local/bin/bash-alias-completion
+    # rm /usr/local/bin/alias-completion-bash
 
 Motivation
 ----------
